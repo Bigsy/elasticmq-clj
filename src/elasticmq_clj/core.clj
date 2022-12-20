@@ -6,10 +6,10 @@
             [elasticmq-clj.state :as state]))
 
 (def default-config
-  {})
+  nil)
 
-(defn ->ig-config [config]
-  {:elasticmq-clj.elasticmq/elasticmq (merge default-config config)})
+(defn ->ig-config [config-path]
+  {:elasticmq-clj.elasticmq/elasticmq config-path})
 
 (defn halt-elasticmq! []
   (when @state/state
@@ -49,7 +49,6 @@
 (defn with-elasticmq-fn
   "Startup with the specified configuration; executes the function then shuts down."
   ([config f]
-   {:pre [(map? config) (fn? f)]}
    (try
      (init-elasticmq config)
      (f)

@@ -1,6 +1,6 @@
 # elasticmq-clj
 
-Embedded elasticmq for clojure
+Embedded sqs for clojure based on elasticmq
 
 ## Usage
 
@@ -31,12 +31,13 @@ Embedded elasticmq for clojure
 
 (defn around-all
   [f]
-  (with-elasticmq-fn (merge default-config)
+  (with-elasticmq-fn "optional file path for custom.conf"
                     f))
 
 (use-fixtures :once around-all)
 
-;;; You can also wrap ad-hoc code in init/halt:
-(with-elasticmq default-config
-	,,, :do-something ,,,)
-```
+
+; You can also wrap ad-hoc code in init/halt:
+(with-elasticmq "optional file path for custom.conf"
+  do-something) 
+  ```

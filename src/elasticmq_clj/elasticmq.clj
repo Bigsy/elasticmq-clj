@@ -42,18 +42,17 @@
       (-> (Files/createDirectory path (make-array FileAttribute 0))
           (.toString)))))
 
-(defn- elasticmq-options
-  "Use elasticmq Local options provided or default values."
-  [project]
-  {})
+
 
 (defn- build-elasticmq-command
   "Build a java command to start elasticmq Local with the required
   options."
-  [project]
-  (let [{:keys [port in-memory? shared-db? db-path jvm-opts]} (elasticmq-options project)
+  [conf-path]
+  (let [conf-path (when conf-path (str "-Dconfig.file=" conf-path))
         jar-path (str (io/file elasticmq-directory "elasticmq.jar"))]
-    (format "java %s -jar %s" (str/join " " jvm-opts) jar-path)))
+    (if conf-path
+      (format "java %s -jar %s" conf-path jar-path)
+      (format "java -jar %s" jar-path))))
 
 (defn start-elasticmq
   "Start elasticmq Local with the desired options."
