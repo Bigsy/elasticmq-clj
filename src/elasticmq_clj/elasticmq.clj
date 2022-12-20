@@ -1,12 +1,10 @@
 (ns elasticmq-clj.elasticmq
   (:require [clojure.java.io :as io]
-            [clojure.string :as str]
             [integrant.core :as ig]
             [clojure.tools.logging :as log])
   (:import [java.io File]
            [java.nio.file Files Paths LinkOption Path]
-           [java.nio.file.attribute FileAttribute]
-           [net.lingala.zip4j.core ZipFile]))
+           [java.nio.file.attribute FileAttribute]))
 
 (def ^:private download-url "https://s3-eu-west-1.amazonaws.com/softwaremill-public/elasticmq-server-1.3.9.jar")
 
