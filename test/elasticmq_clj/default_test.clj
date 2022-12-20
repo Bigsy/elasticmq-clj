@@ -1,39 +1,18 @@
 (ns elasticmq-clj.default-test
   (:require [clojure.test :refer :all]
+            [cheshire.core :as json]
             [elasticmq-clj.core :as sut])
   (:import (com.amazonaws.client.builder AwsClientBuilder AwsClientBuilder$EndpointConfiguration)
            [com.amazonaws.services.sqs
-            AmazonSQS
             AmazonSQSClientBuilder]
-
            [com.amazonaws.auth
             BasicAWSCredentials
-            AWSStaticCredentialsProvider]
-
-           [com.amazonaws.services.sqs.model
-            CreateQueueRequest
-            DeleteMessageBatchResultEntry
-            DeleteMessageBatchResult
-            DeleteMessageResult
-            SendMessageBatchResultEntry
-            BatchResultErrorEntry
-            SendMessageBatchResult
-            SendMessageResult
-            SendMessageBatchRequestEntry
-            SendMessageRequest
-            SendMessageBatchRequest
-            ReceiveMessageResult
-            DeleteMessageRequest
-            DeleteMessageBatchRequest
-            DeleteMessageBatchRequestEntry
-            ReceiveMessageRequest
-            Message]))
+            AWSStaticCredentialsProvider]))
 
 (use-fixtures :once sut/with-elasticmq-fn)
 
 (defn around-all
   [f]
-
   (sut/with-elasticmq-fn f))
 
 (use-fixtures :once around-all)
@@ -48,5 +27,7 @@
 
 (deftest can-wrap-around
   (testing "using defaults"
-    #p(-> client .listQueues)))
+     (-> client
+         (.createQueue "wibble"))
+     (is (= "{QueueUrls: [http://localhost:9324/000000000000/wibble],}" (str (-> client .listQueues))))))
 
