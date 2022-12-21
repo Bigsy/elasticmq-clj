@@ -25,8 +25,7 @@
         (.build))))
 
 (deftest can-wrap-around
-  (testing "using defaults"
+  (testing "using custom conf"
      (-> client
          (.createQueue "wibble"))
      (is (= "{QueueUrls: [http://localhost:9321/000000000000/wibble],}" (str (-> client .listQueues))))))
-
