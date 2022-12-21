@@ -1,6 +1,6 @@
 # elasticmq-clj
 
-Embedded sqs for clojure based on elasticmq
+Embedded sqs for clojure based on elasticmq, just packaged nicely to make it easy to use for mocking in clojure tests
 
 ## Usage
 
